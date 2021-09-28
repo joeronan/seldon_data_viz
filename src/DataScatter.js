@@ -1,6 +1,6 @@
 import React from 'react'
-
 import { VictoryChart, VictoryZoomContainer, VictoryScatter, VictoryTooltip } from 'victory'
+import shuffle from 'lodash.shuffle'
 
 const colorDictionary = {
   'ankle boot': '#000000',
@@ -15,7 +15,28 @@ const colorDictionary = {
   'bag': '#999999',
 }
 
+const updateCentroidData = (data, fillColumn) => {
+  const resultsList = []
+  Object.keys(colorDictionary).forEach((item) => {
+    const itemData = data.filter((x) => (x[fillColumn] == item))
+    const resultsDict = {}
+    resultsDict[fillColumn] = item
+    resultsDict[0] = itemData.reduce((a, b) => a + b[0], 0) / itemData.length
+    resultsDict[1] = itemData.reduce((a, b) => a + b[1], 0) / itemData.length
+    resultsList.push(resultsDict)
+  })
+  return resultsList
+}
+
 const DataScatter = ({ data, fillColumn, zoomDomain, setZoomDomain }) => {
+
+  const [sampleSize, setSampleSize] = React.useState(100)
+
+  const [scatterData, setScatterData] = React.useState(data.slice(0, sampleSize))
+  React.useEffect(() => { setScatterData(data.slice(0, sampleSize)) }, [data, sampleSize])
+
+  const [centroidData, setCentroidData] = React.useState(updateCentroidData(data, fillColumn))
+  React.useEffect(() => { setCentroidData(updateCentroidData(data, fillColumn)) }, [data])
 
   return (
     <VictoryChart width={1000} height={1000}
@@ -29,7 +50,23 @@ const DataScatter = ({ data, fillColumn, zoomDomain, setZoomDomain }) => {
       <VictoryScatter
         labelComponent={<VictoryTooltip />}
         labels={({ datum }) => datum[fillColumn]}
-        data={data}
+        data={centroidData}
+        style={{
+          data: {
+            fill: ({ datum }) => (colorDictionary[datum[fillColumn]]),
+            stroke: "#c43a31",
+            strokeWidth: 3,
+          }
+        }}
+        x={(d) => (d[0])}
+        y={(d) => (d[1])}
+        size={10}
+      />
+
+      <VictoryScatter
+        labelComponent={<VictoryTooltip />}
+        labels={({ datum }) => datum[fillColumn]}
+        data={scatterData}
         style={{
           data: { fill: ({ datum }) => (colorDictionary[datum[fillColumn]]) }
         }}
@@ -49,4 +86,4 @@ const DataScatter = ({ data, fillColumn, zoomDomain, setZoomDomain }) => {
   )
 }
 
-export default DataScatter
+export default React.memo(DataScatter)
