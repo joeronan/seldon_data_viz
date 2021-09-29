@@ -1,7 +1,5 @@
 import React from 'react'
 import { VictoryChart, VictoryHistogram, VictoryBrushContainer, VictoryAxis } from 'victory'
-import moment from 'moment';
-import Hist from './Hist'
 
 const HistController = ({ live, timeDomain, setTimeDomain }) => {
   return (
@@ -23,8 +21,6 @@ const HistController = ({ live, timeDomain, setTimeDomain }) => {
         bins={20}
         x={(d) => d['timestamp']}
       />
-
-      {/* <Hist live={live} /> */}
 
     </VictoryChart>
   )

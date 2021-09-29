@@ -6,11 +6,12 @@ const Notes = () => {
 
   return (
     <>
-      {showText && <div style={{ position: 'absolute', width: '60vw', maxHeight: '80vh', overflowY: 'auto', top: 0, left: 0, padding: '30px 20px 20px 20px', backgroundColor: 'coral' }}>
+      {showText && <div style={{ position: 'absolute', width: '60vw', maxHeight: '80vh', overflowY: 'auto', top: 0, right: 0, padding: '0px 20px 20px 20px', backgroundColor: 'coral' }}>
         <h2>Controls:</h2>
         <ul>
           <li>The two scatter plots can be panned by clicking and dragging. They can be zoomed using the scroll wheel.</li>
           <li>The shaded area of the histogram can be manipulated to observe the live results at different time periods.</li>
+          <li>The sliders can be manipulated to change the amount of downsampling for each plot.</li>
         </ul>
 
         <h2>Observations:</h2>
@@ -29,7 +30,7 @@ const Notes = () => {
       </div>}
 
       <button
-        style={{ position: 'absolute', top: 0, left: 0, height: 40, width: 40, backgroundColor: 'coral' }}
+        style={{ position: 'absolute', top: 0, right: 0, height: 40, width: 40, backgroundColor: 'coral' }}
         onClick={() => { setShowText(!showText) }}
       >{showText ? '-' : '+'}</button>
     </>

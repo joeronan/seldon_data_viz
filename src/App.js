@@ -29,31 +29,20 @@ function App() {
     setLiveData(live.filter((d) => d['timestamp'] > timeDomain.x[0] && d['timestamp'] < timeDomain.x[1]))
   }, [timeDomain])
 
-  const colorDictionary = {
-    'ankle boot': '#000000',
-    't-shirt': '#111111',
-    'dress': '#222222',
-    'pullover': '#333333',
-    'sneaker': '#444444',
-    'sandal': '#555555',
-    'trouser': '#666666',
-    'shirt': '#777777',
-    'coat': '#888888',
-    'bag': '#999999',
-  }
-
   return (
     <div>
       <div style={{ width: '50vw', height: '100vh', position: 'absolute', left: 0 }}>
+        <h1 style={{ paddingLeft: '20px' }}>Reference:</h1>
         <DataScatter data={referenceData} fillColumn={'truth'} zoomDomain={zoomDomain} setZoomDomain={setZoomDomain} />
       </div>
 
       <div style={{ width: '50vw', height: '100vh', position: 'absolute', right: 0 }}>
+        <h1 style={{ paddingLeft: '20px' }}>Live:</h1>
         <DataScatter data={liveData} fillColumn={'prediction'} zoomDomain={zoomDomain} setZoomDomain={setZoomDomain} />
-      </div>
 
-      <div style={{ width: '100vw', height: '10vh', position: 'absolute', bottom: 0 }}>
-        <HistController live={live} timeDomain={{ x: [minDate, maxDate] }} setTimeDomain={setTimeDomain} />
+        <div style={{ height: '10vh', position: 'relative', bottom: 0, margin: 'auto', width: '80%' }}>
+          <HistController live={live} timeDomain={{ x: [minDate, maxDate] }} setTimeDomain={setTimeDomain} />
+        </div>
       </div>
 
       <Notes />
