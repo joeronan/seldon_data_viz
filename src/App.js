@@ -30,12 +30,12 @@ function App() {
   return (
     <>
       <div style={{ width: '50vw', height: '100vh', position: 'absolute', left: 0 }}>
-        <h1 style={{ paddingLeft: '20px' }}>Reference:</h1>
+        <h1 style={{ paddingLeft: '20px' }}>Reference Data:</h1>
         <DataScatter data={reference} fillColumn={'truth'} zoomDomain={zoomDomain} setZoomDomain={setZoomDomain} />
       </div>
 
       <div style={{ width: '50vw', height: '100vh', position: 'absolute', right: 0 }}>
-        <h1 style={{ paddingLeft: '20px' }}>Live:</h1>
+        <h1 style={{ paddingLeft: '20px' }}>Live Data:</h1>
         <DataScatter data={liveData} fillColumn={'prediction'} zoomDomain={zoomDomain} setZoomDomain={setZoomDomain} />
 
         <div style={{ height: '10vh', position: 'relative', bottom: 0 }}>
