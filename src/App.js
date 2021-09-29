@@ -1,5 +1,4 @@
 import React from 'react'
-import './App.css';
 import rawReference from './data/reference.json'
 import rawLive from './data/live.json'
 import moment from 'moment';
@@ -22,7 +21,6 @@ function App() {
   const [zoomDomain, setZoomDomain] = React.useState({ x: [-25, 25], y: [-25, 25] })
   const [timeDomain, setTimeDomain] = React.useState({ x: [minDate, maxDate] })
 
-  const [referenceData, setReferenceData] = React.useState(reference)
   const [liveData, setLiveData] = React.useState(live)
 
   React.useEffect(() => {
@@ -30,24 +28,24 @@ function App() {
   }, [timeDomain])
 
   return (
-    <div>
+    <>
       <div style={{ width: '50vw', height: '100vh', position: 'absolute', left: 0 }}>
         <h1 style={{ paddingLeft: '20px' }}>Reference:</h1>
-        <DataScatter data={referenceData} fillColumn={'truth'} zoomDomain={zoomDomain} setZoomDomain={setZoomDomain} />
+        <DataScatter data={reference} fillColumn={'truth'} zoomDomain={zoomDomain} setZoomDomain={setZoomDomain} />
       </div>
 
       <div style={{ width: '50vw', height: '100vh', position: 'absolute', right: 0 }}>
         <h1 style={{ paddingLeft: '20px' }}>Live:</h1>
         <DataScatter data={liveData} fillColumn={'prediction'} zoomDomain={zoomDomain} setZoomDomain={setZoomDomain} />
 
-        <div style={{ height: '10vh', position: 'relative', bottom: 0, margin: 'auto', width: '80%' }}>
+        <div style={{ height: '10vh', position: 'relative', bottom: 0 }}>
           <HistController live={live} timeDomain={{ x: [minDate, maxDate] }} setTimeDomain={setTimeDomain} />
         </div>
       </div>
 
       <Notes />
 
-    </div >
+    </>
   );
 }
 

@@ -1,21 +1,21 @@
 import React from 'react'
-import { VictoryChart, VictoryZoomContainer, VictoryScatter, VictoryTooltip } from 'victory'
+import { VictoryChart, VictoryZoomContainer, VictoryScatter, VictoryTooltip, VictoryTheme } from 'victory'
 import Slider, { createSliderWithTooltip } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
 const SliderWithTooltip = createSliderWithTooltip(Slider);
 
 const colorDictionary = {
-  'ankle boot': '#000000',
-  't-shirt': '#111111',
-  'dress': '#222222',
-  'pullover': '#333333',
-  'sneaker': '#444444',
-  'sandal': '#555555',
-  'trouser': '#666666',
-  'shirt': '#777777',
-  'coat': '#888888',
-  'bag': '#999999',
+  'ankle boot': '#fff100',
+  't-shirt': '#ff8c00',
+  'dress': '#e81123',
+  'pullover': '#ec008c',
+  'sneaker': '#68217a',
+  'sandal': '#00188f',
+  'trouser': '#00bcf2',
+  'shirt': '#00b294',
+  'coat': '#009e49',
+  'bag': '#bad80a',
 }
 
 const updateCentroidData = (data, fillColumn) => {
@@ -23,7 +23,7 @@ const updateCentroidData = (data, fillColumn) => {
   Object.keys(colorDictionary).forEach((item) => {
     const itemData = data.filter((x) => (x[fillColumn] === item))
     const resultsDict = {}
-    resultsDict[fillColumn] = item
+    resultsDict[fillColumn] = `centroid: ${item}`
     resultsDict[0] = itemData.reduce((a, b) => a + b[0], 0) / itemData.length
     resultsDict[1] = itemData.reduce((a, b) => a + b[1], 0) / itemData.length
     resultsList.push(resultsDict)
@@ -39,11 +39,11 @@ const DataScatter = ({ data, fillColumn, zoomDomain, setZoomDomain }) => {
   React.useEffect(() => { setScatterData(data.slice(0, sampleSize)) }, [data, sampleSize])
 
   const [centroidData, setCentroidData] = React.useState(updateCentroidData(data, fillColumn))
-  React.useEffect(() => { setCentroidData(updateCentroidData(data, fillColumn)) }, [data])
+  React.useEffect(() => { setCentroidData(updateCentroidData(data, fillColumn)) }, [data, fillColumn])
 
   return (
     <>
-      <div style={{ width: '50vw', height: '40vw' }}>
+      <div style={{ width: '50vw', height: 'min(40vw,70vh)' }}>
         <VictoryChart width={1000} height={1000}
           padding={{ top: 0, bottom: 0, left: 0, right: 0 }}
           containerComponent={
@@ -52,25 +52,12 @@ const DataScatter = ({ data, fillColumn, zoomDomain, setZoomDomain }) => {
               onZoomDomainChange={setZoomDomain}
             />
           }
+          theme={VictoryTheme.material}
         >
-          <VictoryScatter
-            labelComponent={<VictoryTooltip />}
-            labels={({ datum }) => datum[fillColumn]}
-            data={centroidData}
-            style={{
-              data: {
-                fill: ({ datum }) => (colorDictionary[datum[fillColumn]]),
-                stroke: "#c43a31",
-                strokeWidth: 3,
-              }
-            }}
-            x={(d) => (d[0])}
-            y={(d) => (d[1])}
-            size={10}
-          />
 
+          {/* Main Scatter */}
           <VictoryScatter
-            labelComponent={<VictoryTooltip />}
+            labelComponent={<VictoryTooltip style={{ fontSize: '25px', fontFamily: 'monospace' }} />}
             labels={({ datum }) => datum[fillColumn]}
             data={scatterData}
             style={{
@@ -80,6 +67,24 @@ const DataScatter = ({ data, fillColumn, zoomDomain, setZoomDomain }) => {
             y={(d) => (d[1])}
           />
 
+          {/* Centroid Scatter */}
+          <VictoryScatter
+            labelComponent={<VictoryTooltip style={{ fontSize: '25px', fontFamily: 'monospace' }} />}
+            labels={({ datum }) => datum[fillColumn]}
+            data={centroidData}
+            style={{
+              data: {
+                fill: ({ datum }) => (colorDictionary[datum[fillColumn].slice(10)]),
+                stroke: "#000000",
+                strokeWidth: 3,
+              }
+            }}
+            x={(d) => (d[0])}
+            y={(d) => (d[1])}
+            size={10}
+          />
+
+          {/* Making sure the plot is large enough */}
           <VictoryScatter
             style={{
               data: { fill: 'white' }
@@ -91,7 +96,7 @@ const DataScatter = ({ data, fillColumn, zoomDomain, setZoomDomain }) => {
         </VictoryChart>
       </div>
 
-      <div style={{ width: '40%', margin: 'auto', width: '50%', padding: '10px 0 10px 0' }}>
+      <div style={{ margin: 'auto', width: '50%', padding: '10px 0 10px 0' }}>
         Number of points sampled: {sampleSize}
         <SliderWithTooltip
           min={100}

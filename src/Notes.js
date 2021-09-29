@@ -11,7 +11,7 @@ const Notes = () => {
         <ul>
           <li>The two scatter plots can be panned by clicking and dragging. They can be zoomed using the scroll wheel.</li>
           <li>The shaded area of the histogram can be manipulated to observe the live results at different time periods.</li>
-          <li>The sliders can be manipulated to change the amount of downsampling for each plot.</li>
+          <li>The sliders control the number of points sampled from within a time eriod, this is for the sake of performance. Centroids are calculated before sampling.</li>
         </ul>
 
         <h2>Observations:</h2>
@@ -23,9 +23,8 @@ const Notes = () => {
 
         <h2>Thing's I'd change in production:</h2>
         <ul>
-          <li>Currently the results are not performant, I would switch over to canvas rendering (most likely using the Nivo package). I chose not to do this for the task as implementing the histogram brush + panning and zooming would have taken much longer in canvas. This is because canvas can easily handle drawing elements but struggles with removing them (necessary for the histogram brush) & manipulating them (necessary for the panning & zooming)</li>
+          <li>Currently the results are not performant, I would switch over to canvas rendering (most likely using the Nivo package). I chose not to do this for the task as implementing the histogram brush + panning and zooming would have taken much longer in canvas. This is because canvas can easily handle drawing elements but struggles with removing them (necessary for the histogram brush) & manipulating them (necessary for the panning & zooming). I included the ability to change the number of samples to help mitigate the performance issues.</li>
           <li>Ask the date format to be changed to be ISO 8601 compliant</li>
-          <li>Add in controls for downsampling</li>
         </ul>
       </div>}
 
