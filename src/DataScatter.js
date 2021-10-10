@@ -43,7 +43,7 @@ const DataScatter = ({ data, fillColumn, zoomDomain, setZoomDomain }) => {
 
   return (
     <>
-      <div style={{ width: '50vw', height: 'min(40vw,70vh)' }}>
+      <div style={{ width: 'min(40vw,70vh)', height: 'min(40vw,70vh)', marginLeft: 'auto', marginRight: 'auto' }}>
         <VictoryChart width={1000} height={1000}
           padding={{ top: 0, bottom: 0, left: 0, right: 0 }}
           containerComponent={
@@ -53,6 +53,7 @@ const DataScatter = ({ data, fillColumn, zoomDomain, setZoomDomain }) => {
             />
           }
           theme={VictoryTheme.material}
+          style={{ parent: { border: '1px solid #888' } }}
         >
 
           {/* Main Scatter */}

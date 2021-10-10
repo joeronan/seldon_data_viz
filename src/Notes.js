@@ -11,7 +11,7 @@ const Notes = () => {
         <ul>
           <li>The two scatter plots can be panned by clicking and dragging. They can be zoomed using the scroll wheel.</li>
           <li>The shaded area of the histogram can be manipulated to observe the live results at different time periods.</li>
-          <li>The sliders control the number of points sampled from within a time eriod, this is for the sake of performance. Centroids are calculated before sampling.</li>
+          <li>The sliders control the number of points sampled from within a time period, this is for the sake of performance. Centroids are calculated before sampling.</li>
         </ul>
 
         <h2>Observations:</h2>

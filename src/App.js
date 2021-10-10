@@ -30,7 +30,7 @@ function App() {
   return (
     <>
       <div style={{ width: '50vw', height: '100vh', position: 'absolute', left: 0 }}>
-        <h1 style={{ paddingLeft: '20px' }}>Reference Data:</h1>
+        <h1 style={{ paddingLeft: '20px' }}>Training Data:</h1>
         <DataScatter data={reference} fillColumn={'truth'} zoomDomain={zoomDomain} setZoomDomain={setZoomDomain} />
       </div>
 
